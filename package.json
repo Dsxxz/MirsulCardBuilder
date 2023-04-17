@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "MirsulCardBuilder",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -19,5 +19,7 @@
     "@types/node": "^18.15.11",
     "nodemon": "^2.0.22",
     "typescript": "^5.0.4"
-  }
+  },
+  "repository": "https://github.com/Lord3dfx/MirsulCardBuilder.git",
+  "author": "Lord3dfx <mxl42@mail.ru>"
 }
