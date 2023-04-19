@@ -1,12 +1,7 @@
 const btn = document.getElementById("btn")
+let resp = await fetch('https://api.render.com/deploy/srv-cgun9bgdh87vhrlp1lgg?key=qjY601xbdT4', { mode: 'no-cors'})
 function btnclick(){
-    fetch('https://cardbuilder.onrender.com/test')
-        .then((response) => {
-            return response.json();
-        })
-        .then((data) => {
-           alert(data);
-        });
+    alert(resp.status)
 }
 
 btn.addEventListener('click', btnclick)
