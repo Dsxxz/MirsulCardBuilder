@@ -1,8 +1,12 @@
 const btn = document.getElementById("btn")
-const xml = new XMLHttpRequest()
-xml.open("GET","https://lord3dfx.github.io/MirsulCardBuilder/cards")
 function btnclick(){
-    alert(xml.status)
+    fetch('https://cardbuilder.onrender.com/')
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+           alert(data);
+        });
 }
 
 btn.addEventListener('click', btnclick)
