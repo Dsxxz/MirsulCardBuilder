@@ -14,5 +14,5 @@ cardRouter.get('/',async (req, res) => {
     res.status(200).send(cards)
 })
 cardRouter.delete('/:name', (req, res) => {
-    res.sendStatus(404)
+    res.sendStatus(403)
 })
