@@ -35,8 +35,10 @@ export const cards_service=
        async getAllCard(){
             return cardsRepo;
         },
-        async getOneCard(id){
-            return cardsRepo.find(id);
+        async getOneCard(id:string){
+            return cardsRepo.find(el=> {
+                return el.id === id
+            });
         },
         async deleteOneCard(id:string){
            const card = cardsRepo.findIndex(el=> {
