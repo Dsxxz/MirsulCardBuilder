@@ -10,9 +10,18 @@ cardRouter.post('/',async (req, res) => {
     res.status(200).send(card)
 })
 cardRouter.get('/',async (req, res) => {
-    const cards =await cards_service.getCard()
+    const cards =await cards_service.getAllCard()
     res.status(200).send(cards)
 })
-cardRouter.delete('/:name', (req, res) => {
-    res.sendStatus(404)
+cardRouter.get('/:id',async (req, res) => {
+    const cards =await cards_service.getOneCard(req.params.id)
+    res.status(200).send(cards)
+})
+cardRouter.delete('/:id', (req, res) => {
+    const cards = cards_service.deleteOneCard(req.params.id)
+    res.status(200).send(cards)
+})
+cardRouter.delete('/', (req, res) => {
+    cards_service.deleteAllCard()
+    res.sendStatus(204)
 })

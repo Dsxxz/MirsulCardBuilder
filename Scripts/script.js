@@ -11,10 +11,11 @@ const arr = document.querySelector("#arr")
         })
 
 function addCard(name, status){
-    const arrTitle = document.createElement("p")
+    const arrTitle = document.createElement("h2")
     const arrStatus = document.createElement("span")
-    const br = document.createElement("hr")
-    arr.append(arrTitle, arrStatus,br)
+    const br = document.createElement("p")
+    br.append(arrTitle, arrStatus)
+    arr.append(br)
     arrTitle.innerText = name
     arrStatus.innerText = status
 }
