@@ -22,6 +22,6 @@ cardRouter.delete('/:id', (req, res) => {
     res.status(200).send(cards)
 })
 cardRouter.delete('/', (req, res) => {
-    cards_service.deleteAllCard()
+     cards_service.deleteAllCard()
     res.sendStatus(204)
 })
