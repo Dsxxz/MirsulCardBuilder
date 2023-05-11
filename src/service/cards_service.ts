@@ -50,6 +50,22 @@ export const cards_service=
         async deleteAllCard(){
              cardsRepo.length=0;
              return 1;
+        },
+        async updateOneCard(id:string,
+                            cardName: string,
+                            status: string){
+            const card = cardsRepo.find(el=> {
+                return el.id === id
+            })
+            card.cardName = cardName
+            card.status = status
+            return card;
+
+        },
+        async updateAllCards(
+                              cardName: string,
+                              status: string){
+           cardsRepo.map((el)=>{el.cardName=cardName,el.status=status})
+            return cardsRepo
         }
     }
-
