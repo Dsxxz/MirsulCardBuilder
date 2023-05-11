@@ -57,6 +57,7 @@ export const cards_service=
             const card = cardsRepo.find(el=> {
                 return el.id === id
             })
+            if(!card){return null}
             card.cardName = cardName
             card.status = status
             return card;

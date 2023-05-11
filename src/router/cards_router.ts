@@ -27,8 +27,9 @@ cardRouter.delete('/', (req, res) => {
 })
 cardRouter.put('/:id', (req, res) => {
     const card = cards_service.updateOneCard(req.params.id,req.body.cardName,req.body.status)
-    res.status(204).send(card)
-})
+    if(card){
+    res.status(204).send(card)}
+        else{res.sendStatus(404)}})
 cardRouter.put('/', (req, res) => {
     const cards = cards_service.updateAllCards(req.body.cardName,req.body.status)
     res.status(204).send(cards)
