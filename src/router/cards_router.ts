@@ -6,7 +6,7 @@ export const cardRouter = Router({});
 
 
 cardRouter.post('/',async (req, res) => {
-    const card = await cards_service.addCard(req.body.name,req.body.status)
+    const card = await cards_service.addCard(req.body.cardName,req.body.status)
     res.status(200).send(card)
 })
 cardRouter.get('/',async (req, res) => {
