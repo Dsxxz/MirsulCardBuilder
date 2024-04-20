@@ -5,7 +5,7 @@ export const cards_service=
     {
        async addCard(cardCreateDto: cardCreateDtoType){
            const newCard = new CardModelClass(cardCreateDto);
-           newCard.save();
+           await newCard.save();
           return {
               id:newCard._id.toString(),
               cardName: newCard.cardName,
