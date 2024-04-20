@@ -1,15 +1,15 @@
 import {MongoClient} from "mongodb";
-import * as mongoose from "mongoose";
+import mongoose from "mongoose"
 import {cardDBType} from "../models/card_model";
 
-const mongoUri = process.env.MONGO_REMOTE ||  process.env.mongoUri
-console.log(mongoUri)
-if(!mongoUri){
+
+const mongoUrl:string = process.env.MONGO_REMOTE || process.env.mongoUri as string
+if(!mongoUrl){
     throw new Error("URL doesnt found")
 }
 
 
-export const client = new MongoClient(mongoUri)
+export const client = new MongoClient(mongoUrl)
 
 const cardSchema = new mongoose.Schema<cardDBType>({
     _id: {type:mongoose.Schema.ObjectId, required:true},
@@ -22,7 +22,7 @@ export const CardModelClass = mongoose.model('CARDS',cardSchema)
 export async function runDb():Promise<void>{
     try{
         await client.connect();
-        await mongoose.connect(mongoUri, {dbName: "MirsulCards"})
+        await mongoose.connect(mongoUrl, {dbName: "MirsulCards"})
         console.log("mongoose connected")
         return;
     }

@@ -20,7 +20,7 @@ export const cards_service=
            return cards;
        },
         async getOneCard(id: string): Promise<cardViewType | null>{
-            const card:cardDBType | undefined = await CardModelClass.findOne({_id: new ObjectId(id)});
+            const card:cardDBType | null = await CardModelClass.findOne({_id: new ObjectId(id)});
             return card ?
                 {
                     id:card._id.toString(),
