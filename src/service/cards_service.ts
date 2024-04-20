@@ -14,6 +14,7 @@ export const cards_service=
         },
        async getAllCard(): Promise<cardDBType[]>{
            const cards = await CardModelClass.find();
+           console.log(cards)
            if(!cards){
                return [];
            }
