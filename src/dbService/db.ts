@@ -1,9 +1,10 @@
 import {MongoClient} from "mongodb";
-import mongoose from "mongoose"
+import mongoose, {mongo} from "mongoose"
 import {cardDBType} from "../models/card_model";
 
 
 const mongoUrl:string = process.env.MONGO_REMOTE || process.env.mongoUri as string
+console.log(mongoUrl)
 if(!mongoUrl){
     throw new Error("URL doesnt found")
 }
