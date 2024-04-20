@@ -1,72 +1,56 @@
-import {CardType} from "../models/card_model";
-const cardsRepo:Array<CardType>=[
-    {
-    id:"1",
-    cardName:"sdgsgsgsgs",
-    status:"sdgdfsgd"
-},
-    {
-        id:"2",
-        cardName:"sdgsgsgsgs",
-        status:"sdgdfsgd"
-    },{
-        id:"4",
-        cardName:"sdgsgsgsgs",
-        status:"sdgdfsgd"
-    },
-    {
-        id:"3",
-        cardName:"sdgsgsgsgs",
-        status:"sdgdfsgd"
-    },{
-        id:"5",
-        cardName:"sdgsgsgsgs",
-        status:"sdgdfsgd"
-    }];
-let num=10
+import {CardModelClass} from "../dbService/db";
+import {cardCreateDtoType, cardDBType, cardViewType} from "../models/card_model";
+import {ObjectId} from "mongodb";
 export const cards_service=
     {
-       async addCard(name:string,status:string){
-            const newCard = {id:(num+=1).toString(), cardName:name,
-            status:status}
-            cardsRepo.push(newCard)
-            return newCard;
+       async addCard(cardCreateDto: cardCreateDtoType){
+           const newCard = new CardModelClass(cardCreateDto);
+           newCard.save();
+          return {
+              id:newCard._id.toString(),
+              cardName: newCard.cardName,
+              status: newCard.status
+          }
         },
-       async getAllCard(){
-            return cardsRepo;
-        },
-        async getOneCard(id:string){
-            return cardsRepo.find(el=> {
-                return el.id === id
-            });
+       async getAllCard(): Promise<cardDBType[]>{
+           const cards = await CardModelClass.find();
+           if(!cards){
+               return [];
+           }
+           return cards;
+       },
+        async getOneCard(id: string): Promise<cardViewType | null>{
+            const card:cardDBType | undefined = await CardModelClass.findOne({_id: new ObjectId(id)});
+            return card ?
+                {
+                    id:card._id.toString(),
+                cardName: card.cardName,
+                status: card.status
+                } : null;
         },
         async deleteOneCard(id:string){
-           const card = cardsRepo.findIndex(el=> {
-               return el.id === id
-           })
-            cardsRepo.splice(card,1)
-            return 1;
+            if(!ObjectId.isValid(id)){
+                return false;
+            }
+           const card = CardModelClass.findOne({_id: new ObjectId(id)});
+            if(!card){
+                return false;
+            }
+            card.deleteOne()
+            return true;
         },
         async deleteAllCard(){
-             cardsRepo.length=0;
-             return 1;
+             return  CardModelClass.deleteMany({});
         },
-        async updateOneCard(id:string,
-                            cardName: string,
-                            status: string){
-            const card = cardsRepo.find(el=> {
-                return el.id === id
-            })
-            if(!card){return null}
-            card.cardName = cardName
-            card.status = status
-            return card;
-
+        async updateOneCard(id: string, cardForUpdate : cardCreateDtoType){
+            await CardModelClass.updateOne({_id : new ObjectId(id)},
+               {cardName:cardForUpdate.cardName, status: cardForUpdate.status});
+           return this.getOneCard(id);
         },
-        async updateAllCards(
-                              cardName: string,
-                              status: string){
-           cardsRepo.map((el)=>{el.cardName=cardName,el.status=status})
-            return cardsRepo
+        async updateAllCards(cardForUpdate : cardCreateDtoType,dto?:any){
+           const filter = dto ? {cardName : dto.cardName} : {}
+            await CardModelClass.updateMany(filter,
+               {cardName:cardForUpdate.cardName, status: cardForUpdate.status});
+            return await this.getAllCard();
         }
     }
