@@ -1,4 +1,8 @@
 dist
 node_modules
+<<<<<<< HEAD
+.idea
+=======
 .idea
 .env
+>>>>>>> 532886d0efd75ad33119c310311811eff5ab51bf
